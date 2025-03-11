@@ -1,0 +1,12 @@
+console.log("Hi there! I'm Chatty, your Node.js chatbot.");
+rl.question("What's your name? ", (name) => {
+    console.log(`Nice to meet you, ${name}! How are you feeling today?`);
+    rl.question("Type your response: ", (feeling) => {
+        if (feeling.toLowerCase().includes("good") || feeling.toLowerCase().includes("great")) {
+            console.log("Awesome! Let's have a fun conversation.");
+        } else {
+            console.log("I'm here to cheer you up! Remember, every day is a new adventure!");
+        }
+        rl.close();
+    });
+});
