@@ -1,0 +1,17 @@
+const fs = require('fs');
+const readline = require('readline');
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+rl.question("What's your diary entry for today? ", (entry) => {
+    // Append the diary entry to diary.txt along with a newline.
+    fs.appendFile('diary.txt', entry + '\n', (err) => {
+        if (err) {
+            console.error('Error saving diary entry:', err);
+        } else {
+            console.log('Your diary entry was saved!');
+        }
+        rl.close();
+    });
+});
