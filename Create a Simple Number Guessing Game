@@ -1,0 +1,39 @@
+// Import readline for user input
+const readline = require('readline');
+// Create an interface for input/output
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+// Generate a random number between 1 and 20
+const targetNumber = Math.floor(Math.random() * 20) + 1;
+let attempts = 5;  // Give the player 5 attempts
+console.log("Welcome to the Number Guessing Game!");
+console.log("I have picked a number between 1 and 20. Can you guess it?");
+// Define a function to handle the guessing process
+function askGuess() {
+    if (attempts === 0) {
+        console.log("Sorry, you've run out of guesses. The number was " + targetNumber);
+        rl.close();
+        return;
+    }
+    rl.question("Enter your guess: ", (input) => {
+        const guess = Number(input);
+        if (isNaN(guess)) {
+            console.log("That is not a number. Try again.");
+        } else if (guess < targetNumber) {
+            console.log("Too low! Try a higher number.");
+        } else if (guess > targetNumber) {
+            console.log("Too high! Try a lower number.");
+        } else {
+            console.log("Congratulations! You guessed the right number!");
+            rl.close();
+            return;
+        }
+        attempts--;
+        console.log(`You have ${attempts} guess(es) left.`);
+        askGuess();  // Recursively ask until game over or win
+    });
+}
+// Start the game
+askGuess();
