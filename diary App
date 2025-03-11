@@ -1,0 +1,35 @@
+const fs = require('fs');
+const readline = require('readline');
+// Create a readline interface for user input.
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+// Ask the user for their diary entry.
+rl.question("Enter your diary entry for today: ", (entry) => {
+    const dateTime = new Date().toLocaleString();
+    const formattedEntry = `\n[${dateTime}] ${entry}\n`;
+    // Append the diary entry to the diary file.
+    fs.appendFile('myDiary.txt', formattedEntry, (err) => {
+        if (err) {
+            console.error('Error saving your diary entry:', err);
+        } else {
+            console.log('Your diary entry was successfully saved!');
+            // Optionally, ask if they want to read the diary.
+            rl.question("Would you like to read your diary so far? (yes/no) ", (answer) => {
+                if (answer.trim().toLowerCase() === 'yes') {
+                    fs.readFile('myDiary.txt', 'utf8', (err, data) => {
+                        if (err) {
+                            console.error('Error reading your diary:', err);
+                        } else {
+                            console.log("Here is your diary:\n", data);
+                        }
+                        rl.close();
+                    });
+                } else {
+                    rl.close();
+                }
+            });
+        }
+    });
+});
