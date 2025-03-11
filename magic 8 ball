@@ -1,0 +1,32 @@
+const advice = [
+    "Yes, definitely!",
+    "No, try again later.",
+    "Maybe, ask again.",
+    "Absolutely!",
+    "I wouldn't count on it.",
+    "Better not tell you now.",
+    "Without a doubt!",
+    "Very doubtful."
+];
+
+
+function getRandomAdvice() {
+    const randomIndex = Math.floor(Math.random() * advice.length);
+    return advice[randomIndex];
+}
+
+
+const http = require('http');
+const server = http.createServer((req, res) => {
+    if (req.url === '/magic8ball') {
+        const answer = getRandomAdvice();
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(`<h1>Magic 8-Ball Says:</h1><p>${answer}</p>`);
+    } else {
+        res.writeHead(404, { 'Content-Type': 'text/html' });
+        res.end('<h1>404 Not Found</h1>');
+    }
+});
+server.listen(3000, () => {
+    console.log('Magic 8-Ball server is running on http://localhost:3000/magic8ball');
+});
